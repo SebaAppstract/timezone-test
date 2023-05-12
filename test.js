@@ -8,24 +8,45 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Los_Angeles");
 
-// potential functions
-function convertToUtc(date) {
-  return dayjs(date).utc();
+/**
+ * Converts a date to local timezone and then to UTC
+ * @param date: string | Date | dayjs.Dayjs
+ * @returns dayjs.Dayjs
+ */
+export function convertToUtc(date) {
+  return dayjs.tz(date).utc();
 }
 
-function convertToUtcKeepingHurs(date) {
-  return dayjs(date).utc(true)
+/**
+ * Converts a date to local timezone and then to UTC keeping the hours the same and adding offset
+ * @param date: string | Date | dayjs.Dayjs
+ * @returns dayjs.Dayjs
+ */
+export function convertToUtcKeepingHours(date) {
+  return dayjs.tz(date).utc(true);
 }
 
-function getUtcDate() {
+/**
+ * @returns dayjs.Dayjs
+ */
+export function getUtcDate() {
   return dayjs.utc();
 }
 
-function getLocalDate() {
+/**
+ *
+ * @returns dayjs.Dayjs
+ */
+export function getLocalDate() {
   return dayjs().tz();
 }
 
-function convertToLocalDate(date) {
+/**
+ * converts a given date into propertie's time zone
+ * @param date: string | Date | dayjs.Dayjs
+ * @returns dayjs.Dayjs
+ */
+export function convertToLocalDate(date) {
   return dayjs(date).tz();
 }
 
@@ -47,7 +68,7 @@ function showOnFEDateWhichHoursMatterAndSendItToBEInUTC() {
 
 function showOnFEDateWhichHoursDontMatter() {
   const date = '2023-05-11'
-  const dateObjectToUseInBe = convertToUtcKeepingHurs(date)
+  const dateObjectToUseInBe = convertToUtcKeepingHours(date)
   console.log('Should be: "2023-05-11T00:00:00:00:00Z')
   console.log('Is:        ', dateObjectToUseInBe.format("YYYY-MM-DDTHH:mm:ssZ[Z]"))
 }
